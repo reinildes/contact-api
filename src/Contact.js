@@ -8,6 +8,10 @@ calculateAge = (birthDate) => {
 class Contact{
     constructor(name, gender, birthDate) {
 
+        if(new Date() < birthDate) {
+            throw new Error("Invalid Date. Make sure BirthDate is less than today!")
+        }
+
         if(calculateAge(birthDate) < 18) {
             throw new Error("Not safe for minors!")
         }

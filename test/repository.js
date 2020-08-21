@@ -1,19 +1,27 @@
 const assert = require('assert');
-const repository = require("../src/repository")
-
-describe('Array', function () {
-  describe('#indexOf()', function () {
-    it('should return -1 when the value is not present', function () {
-      assert.equal([1, 2, 3].indexOf(4), -1);
-    });
-  });
-});
+const Repository = require("../src/repository")
+const Contact = require("../src/Contact")
+const expect = require('chai').expect;
 
 describe('Contact', function () {
-    describe('#getContact()', function () {
-      it('should return Reinildes', function () {
-          console.log("ahhh", repository.getContact())
-        assert.equal(repository.getContact(), "Reinildes");
+    describe('#CRUD', function () {
+      it('should allow crud operations', function () {
+        
+        const {MongoClient} = require('mongodb');
+
+        const uri = "mongodb://localhost/test?retryWrites=true&w=majority";
+        
+        const peter = new Contact("Peter Pan", "M", new Date(2000, 05, 34));
+        const charles = new Contact("Charles Chapplin", "M", new Date(2000, 05, 34));
+
+        let repository = new Repository(uri)
+
+        repository.addContact(peter);
+        repository.addContact(charles);
+
+        const contacts = repository.listAllContacts();
+
+        assert.equal(contacts.lenght, 2);
       });
     });
   });
