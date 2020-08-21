@@ -7,6 +7,11 @@ calculateAge = (birthDate) => {
 
 class Contact{
     constructor(name, gender, birthDate) {
+
+        if(calculateAge(birthDate) < 18) {
+            throw new Error("Not safe for minors!")
+        }
+
         this.name = name
         this.gender = gender
         this.birthDate = birthDate

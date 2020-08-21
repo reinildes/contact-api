@@ -4,6 +4,9 @@ const uri = "mongodb://localhost/test?retryWrites=true&w=majority";
 
 async function main(){
 
+
+    
+
     const client = new MongoClient(uri);
  
     try {
