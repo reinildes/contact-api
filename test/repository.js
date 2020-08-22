@@ -1,27 +1,29 @@
 const assert = require('assert');
-const Repository = require("../src/repository")
+const repository = require("../src/repository")
 const Contact = require("../src/Contact")
 const expect = require('chai').expect;
 
 describe('Contact', function () {
     describe('#CRUD', function () {
-      it('should allow crud operations', function () {
+      it('should allow crud operations', async () => {
         
-        const {MongoClient} = require('mongodb');
-
-        const uri = "mongodb://localhost/test?retryWrites=true&w=majority";
+        await repository.cleanDB();
         
         const peter = new Contact("Peter Pan", "M", new Date(2000, 05, 34));
         const charles = new Contact("Charles Chapplin", "M", new Date(2000, 05, 34));
 
-        let repository = new Repository(uri)
+        await repository.addContact(peter);
+        await repository.addContact(charles);
 
-        repository.addContact(peter);
-        repository.addContact(charles);
+        const returnedPeter = await repository.getContact("Peter Pan")
 
-        const contacts = repository.listAllContacts();
+        console.log("Peter", returnedPeter)
 
-        assert.equal(contacts.lenght, 2);
+        
+        const contacts = await repository.listAllContacts();
+        contacts.forEach(x => console.log(x))
+
+        
       });
     });
   });
