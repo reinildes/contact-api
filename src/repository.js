@@ -16,7 +16,11 @@ async function connect(){
 }
 
 async function disconnect(){
-    client.close();
+    try {
+        await client.close();
+    } catch (e) {
+        console.error(e);
+    }
 }
 
 async function addContact(contact){
@@ -39,16 +43,16 @@ async function listAllContacts(){
 
 async function cleanDB(){
 
-    await client.db("local")
+    client.db("local")
         .collection("contact")
-        .remove();
+        .deleteMany();
 }
 
 async function removeContact(contact){
 
-    await client.db("local")
+    client.db("local")
         .collection("contact")
-        .remove({name: contact.name});
+        .deleteOne({_id: contact._id});
 }
 
 async function getContact(name){
