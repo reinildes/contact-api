@@ -1,29 +1,35 @@
-const assert = require('assert');
 const repository = require("../src/repository")
 const Contact = require("../src/Contact")
 const expect = require('chai').expect;
+const assert = require('chai').assert;
 
 describe('Contact', function () {
     describe('#CRUD', function () {
-      it('should allow crud operations', async () => {
+
+      beforeEach(() => repository.connect());
+
+      afterEach(() => repository.disconnect());
+
+      it('repository lists all contacts', async function() {
         
-        await repository.cleanDB();
+        repository.cleanDB();
         
-        const peter = new Contact("Peter Pan", "M", new Date(2000, 05, 34));
+        const peter = new Contact("Single", "M", new Date(2000, 05, 34));
         const charles = new Contact("Charles Chapplin", "M", new Date(2000, 05, 34));
 
-        await repository.addContact(peter);
-        await repository.addContact(charles);
+        repository.addContact(peter);
+        repository.addContact(charles);
 
-        const returnedPeter = await repository.getContact("Peter Pan")
+        const contactList = await repository.listAllContacts()
+        const sortedContactList = contactList.sort( (x,y) => x > y ? 1 : -1)
 
-        console.log("Peter", returnedPeter)
+        expect(contactList.length).to.eq(2)
 
-        
-        const contacts = await repository.listAllContacts();
-        contacts.forEach(x => console.log(x))
+        const savedCharles = sortedContactList[0]
+        const savedPeter = sortedContactList[1]
 
-        
+        assert.isTrue(savedCharles.equals(charles))
+        assert.isTrue(savedPeter.equals(peter))
       });
     });
   });

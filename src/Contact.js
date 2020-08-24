@@ -25,6 +25,12 @@ class Contact{
         return calculateAge(this.birthDate)
     }
 
+    equals = (contact) => {
+        return contact.name === this.name &&
+            contact.gender === this.gender &&
+            contact.birthDate.toString() === this.birthDate.toString()
+    }
+
 };
 
 module.exports = Contact

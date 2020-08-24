@@ -1,15 +1,13 @@
 const Contact = require("../src/Contact")
-
 const {MongoClient} = require('mongodb');
 
 const uri = "mongodb://localhost/test?retryWrites=true&w=majority";
 
 const client = new MongoClient(uri);
 
-async function mongodb(){   
+async function connect(){   
     try {
         await client.connect();
- 
         return client;
  
     } catch (e) {
@@ -17,9 +15,11 @@ async function mongodb(){
     } 
 }
 
-async function addContact(contact){
+async function disconnect(){
+    client.close();
+}
 
-        await mongodb();
+async function addContact(contact){
 
         client.db("local")
                 .collection("contact")
@@ -28,19 +28,16 @@ async function addContact(contact){
 
 async function listAllContacts(){
 
-    await mongodb();
-
     const result = await client.db("local")
         .collection("contact")
         .find({})
         .map(x => new Contact(x.name, x.gender, new Date(x.birthDate)))
+        .toArray()
 
     return result;
 }
 
 async function cleanDB(){
-
-    await mongodb();
 
     await client.db("local")
         .collection("contact")
@@ -49,8 +46,6 @@ async function cleanDB(){
 
 async function removeContact(contact){
 
-    await mongodb();
-
     await client.db("local")
         .collection("contact")
         .remove({name: contact.name});
@@ -58,13 +53,9 @@ async function removeContact(contact){
 
 async function getContact(name){
 
-    await mongodb();
-
-    await client.db("local")
+    client.db("local")
         .collection("contact")
-        .findOne({name: "Peter Pan"})
+        .findOne({name: "Single"})
 }
 
-module.exports = {listAllContacts, addContact, cleanDB, removeContact, getContact}
-
-
+module.exports = {listAllContacts, addContact, cleanDB, removeContact, getContact, connect, disconnect}
