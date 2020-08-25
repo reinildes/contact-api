@@ -60,7 +60,7 @@ describe('Contact', function () {
 
         contact.name = "Not Henrique Anymore"
 
-        await repository.updateContact(contact)
+        await repository.updateContact(contact._id, contact)
         const contactUpdated = await repository.getContact(contact._id)
 
         assert.equal(contactUpdated.name, "Not Henrique Anymore")
@@ -80,7 +80,7 @@ describe('Contact', function () {
 
         contact.enabled = false
 
-        await repository.updateContact(contact)
+        await repository.updateContact(contact._id, contact)
         
         const contactUpdated = await repository.getContact(contact._id)
         const contactListUpdated = await repository.listAllContacts()

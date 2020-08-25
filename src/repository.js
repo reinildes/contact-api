@@ -1,5 +1,5 @@
 const Contact = require("../src/Contact")
-const {MongoClient} = require('mongodb');
+const {MongoClient, ObjectID} = require('mongodb');
 
 const uri = "mongodb://localhost/test?retryWrites=true&w=majority";
 
@@ -56,17 +56,16 @@ async function removeContact(contact){
 }
 
 async function getContact(id){
-
     const result = client.db("local")
         .collection("contact")
-        .find({_id: id, enabled: true})
+        .find({_id: ObjectID(id), enabled: true})
         .next()
     
     return result
 }
 
-async function updateContact(contact){
-    const id = contact._id
+async function updateContact(oldId, contact){
+    const id = oldId
     client.db("local")
         .collection("contact")
         .replaceOne({_id: id}, contact)
