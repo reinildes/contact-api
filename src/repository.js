@@ -68,7 +68,7 @@ async function updateContact(oldId, contact){
     const id = oldId
     client.db("local")
         .collection("contact")
-        .replaceOne({_id: id}, contact)
+        .replaceOne({_id: ObjectID(id)}, contact)
 }
 
 module.exports = {listAllContacts, addContact, cleanDB, 

@@ -59,7 +59,7 @@ describe('Contact', function () {
         assert.equal(contactReturned.name, "Henrique")
 
         contact.name = "Not Henrique Anymore"
-
+ 
         await repository.updateContact(contact._id, contact)
         const contactUpdated = await repository.getContact(contact._id)
 

@@ -24,16 +24,24 @@ app.get("/contact/:id", async (req, res) => {
 })
 
 app.post("/contact", async (req, res) => {
-    const newContact = new Contact(req.body.name, req.body.gender, new Date(req.body.birthDate))
-    await repository.addContact(newContact)
-    res.send("Added with success!")
+    try {
+        const newContact = new Contact(req.body.name, req.body.gender, new Date(req.body.birthDate))
+        await repository.addContact(newContact)
+        res.sendStatus(201)
+    } catch (error) {
+        res.status(500).send(error.message)        
+    }
 })
 
-app.put("/contact", async (req, res) => {
-    console.log(req.body)
-    const newContact = new Contact(req.body.name, req.body.gender, new Date(req.body.birthDate))
-    await repository.updateContact(newContact)
-    res.send("Added with success!")
+app.put("/contact/:id", async (req, res) => {
+    try {
+        const newContact = new Contact(req.body.name, req.body.gender, new Date(req.body.birthDate))
+        await repository.updateContact(req.params.id, newContact)
+        res.sendStatus(200)
+    } catch (error) {
+        res.status(500).send(error.message)        
+    }
+
 })
 
 app.listen(3000, () => console.log("Server is running!"))
