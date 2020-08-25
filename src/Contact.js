@@ -6,7 +6,7 @@ calculateAge = (birthDate) => {
 }
 
 class Contact{
-    constructor(name, gender, birthDate) {
+    constructor(name, gender, birthDate, enabled = true) {
 
         if(new Date() < birthDate) {
             throw new Error("Invalid Date. Make sure BirthDate is less than today!")
@@ -19,6 +19,7 @@ class Contact{
         this.name = name
         this.gender = gender
         this.birthDate = birthDate
+        this.enabled = enabled
     }
 
     getAge = () => {

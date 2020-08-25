@@ -34,7 +34,7 @@ async function listAllContacts(){
 
     const result = await client.db("local")
         .collection("contact")
-        .find({})
+        .find({enabled: true})
         .map(x => new Contact(x.name, x.gender, new Date(x.birthDate)))
         .toArray()
 
@@ -59,7 +59,7 @@ async function getContact(id){
 
     const result = client.db("local")
         .collection("contact")
-        .find({_id: id})
+        .find({_id: id, enabled: true})
         .next()
     
     return result

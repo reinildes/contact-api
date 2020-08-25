@@ -48,7 +48,7 @@ describe('Contact', function () {
         assert.equal(contactList2.length, 0)
       });
 
-      it('updates single object', async function() {
+      it('gets and updates single object', async function() {
         
         const contact = new Contact("Henrique", "M", new Date(2000, 05, 34));
 
@@ -64,6 +64,29 @@ describe('Contact', function () {
         const contactUpdated = await repository.getContact(contact._id)
 
         assert.equal(contactUpdated.name, "Not Henrique Anymore")
+      });
+
+      it('disables a document', async function() {
+        
+        const contact = new Contact("Henrique", "M", new Date(2000, 05, 34));
+
+        await repository.addContact(contact);
+
+        const contactReturned = await repository.getContact(contact._id)
+        const contactList = await repository.listAllContacts()
+
+        assert.equal(contactReturned.name, "Henrique")
+        assert.equal(contactList.length, 1)
+
+        contact.enabled = false
+
+        await repository.updateContact(contact)
+        
+        const contactUpdated = await repository.getContact(contact._id)
+        const contactListUpdated = await repository.listAllContacts()
+
+        assert.equal(contactUpdated, null)
+        assert.equal(contactListUpdated.length, 0)
       });
     });
   });
