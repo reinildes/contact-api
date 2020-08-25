@@ -63,8 +63,6 @@ describe('Contact', function () {
         await repository.updateContact(contact)
         const contactUpdated = await repository.getContact(contact._id)
 
-        console.log(contactUpdated)
-
         assert.equal(contactUpdated.name, "Not Henrique Anymore")
       });
     });
