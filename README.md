@@ -4,6 +4,12 @@
 node test
 ````
 
+### To run the app
+
+````
+MONGO_URL='mongodb://localhost/test?retryWrites=true&w=majority' npm start
+````
+
 ### Test with curl
 ````
 curl -X POST -d "{\"name\": \"Maria Joaquina\", \"gender\": \"F\", \"birthDate\": \"2000-08-25T01:59:30.046Z\"}" -H "Content-Type: application/json" http://localhost:3000/contact -ki

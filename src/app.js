@@ -41,7 +41,6 @@ app.put("/contact/:id", async (req, res) => {
     } catch (error) {
         res.status(500).send(error.message)        
     }
-
 })
 
 app.listen(3000, () => console.log("Server is running!"))

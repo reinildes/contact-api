@@ -1,0 +1,17 @@
+version: '3.0'
+services:
+  api:
+    build: .
+    ports:
+    - "3000:3000"
+    depends_on:
+    - mongodb
+    environment:
+      - MONGO_URL=mongodb://mongodb/test?retryWrites=true&w=majority
+      
+    links:
+      - mongodb
+  mongodb:
+    image: mongo
+    ports:
+    - "27017:27017"

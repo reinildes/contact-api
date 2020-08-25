@@ -1,7 +1,7 @@
 const Contact = require("../src/Contact")
 const {MongoClient, ObjectID} = require('mongodb');
 
-const uri = "mongodb://localhost/test?retryWrites=true&w=majority";
+const uri = process.env.MONGO_URL;
 
 const client = new MongoClient(uri);
 
