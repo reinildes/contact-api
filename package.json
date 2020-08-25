@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --retries=5"
+    "test": "mocha --retries=10"
   },
   "author": "",
   "license": "ISC",
