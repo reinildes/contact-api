@@ -47,5 +47,25 @@ describe('Contact', function () {
 
         assert.equal(contactList2.length, 0)
       });
+
+      it('updates single object', async function() {
+        
+        const contact = new Contact("Henrique", "M", new Date(2000, 05, 34));
+
+        await repository.addContact(contact);
+
+        const contactReturned = await repository.getContact(contact._id)
+
+        assert.equal(contactReturned.name, "Henrique")
+
+        contact.name = "Not Henrique Anymore"
+
+        await repository.updateContact(contact)
+        const contactUpdated = await repository.getContact(contact._id)
+
+        console.log(contactUpdated)
+
+        assert.equal(contactUpdated.name, "Not Henrique Anymore")
+      });
     });
   });

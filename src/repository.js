@@ -55,11 +55,22 @@ async function removeContact(contact){
         .deleteOne({_id: contact._id});
 }
 
-async function getContact(name){
+async function getContact(id){
 
-    client.db("local")
+    const result = client.db("local")
         .collection("contact")
-        .findOne({name: "Single"})
+        .find({_id: id})
+        .next()
+    
+    return result
 }
 
-module.exports = {listAllContacts, addContact, cleanDB, removeContact, getContact, connect, disconnect}
+async function updateContact(contact){
+    const id = contact._id
+    client.db("local")
+        .collection("contact")
+        .replaceOne({_id: id}, contact)
+}
+
+module.exports = {listAllContacts, addContact, cleanDB, 
+    removeContact, getContact, connect, disconnect, updateContact}
