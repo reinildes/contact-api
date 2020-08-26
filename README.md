@@ -6,14 +6,14 @@ node test
 
 ### To run the app
 
-## Run it easily with docker with. This way you don't need to have a pre-installed mongo
+#### Run it easily with docker with. This way you don't need to have a pre-installed mongo
 
 ````
 docker-compose build
 docker-compose up
 ````
 
-## Or inform your mongo url as a environement variable
+#### Or inform your mongo url as a environement variable
 ````
 MONGO_URL='mongodb://localhost/test?retryWrites=true&w=majority' npm start
 ````
