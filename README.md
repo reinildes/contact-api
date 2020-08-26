@@ -6,7 +6,7 @@ node test
 
 ### To run the app
 
-#### Run it easily with docker with. This way you don't need to have a pre-installed mongo
+#### Run it easily with docker. This way you don't need to have a pre-installed mongo
 
 ````
 docker-compose build
